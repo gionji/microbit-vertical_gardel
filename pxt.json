@@ -5,7 +5,8 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "Environment-and-Science-IoT": "github:tinkertanker/pxt-iot-environment-kit#v4.5.0"
+        "Environment-and-Science-IoT": "github:tinkertanker/pxt-iot-environment-kit#v4.5.0",
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
     },
     "files": [
         "main.blocks",

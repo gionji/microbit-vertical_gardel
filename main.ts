@@ -1,3 +1,9 @@
+function swith_all_relays (relay_state: number) {
+    pump_state = relay_state
+    lamp_1_state = relay_state
+    lamp_2_state = relay_state
+    apply_relays_status()
+}
 function irrigate () {
     pump_state = 1
     pins.digitalWritePin(DigitalPin.P13, pump_state)
@@ -20,17 +26,14 @@ function light_time_check () {
 input.onButtonPressed(Button.A, function () {
     switch_light(2)
 })
-function swith_off_relays () {
-    pump_state = 0
-    lamp_1_state = 0
-    lamp_2_state = 0
+input.onButtonPressed(Button.AB, function () {
+    irrigate()
+})
+function apply_relays_status () {
     pins.digitalWritePin(DigitalPin.P13, pump_state)
     pins.digitalWritePin(DigitalPin.P15, lamp_1_state)
     pins.digitalWritePin(DigitalPin.P16, lamp_2_state)
 }
-input.onButtonPressed(Button.AB, function () {
-    irrigate()
-})
 input.onButtonPressed(Button.B, function () {
     switch_light(1)
 })
@@ -130,11 +133,13 @@ let pump_state = 0
 OLED.init(128, 64)
 connect_to_wifi()
 ESP8266_IoT.connectThingSpeak()
-swith_off_relays()
+pump_state = 0
+lamp_1_state = 1
+lamp_2_state = 1
+apply_relays_status()
 basic.forever(function () {
+    basic.pause(10000)
     read_sensors()
     print_variables()
-    light_time_check()
     send_data_to_thingspeak()
-    basic.pause(10000)
 })
